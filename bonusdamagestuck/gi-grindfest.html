@@ -1,0 +1,3730 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>BONUSDAMAGESTUCK - terminal-gi</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+            font-weight: 300;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+            font-weight: 500;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+            font-weight: 600;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+            font-weight: 700;
+        }
+
+        body {
+            background-color: #36393e;
+            color: #dcddde;
+            font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            object-fit: contain;
+        }
+
+        .markdown {
+            max-width: 100%;
+            line-height: 1.3;
+            overflow-wrap: break-word;
+        }
+
+        .preserve-whitespace {
+            white-space: pre-wrap;
+        }
+
+        .spoiler-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .spoiler-text--hidden {
+            cursor: pointer;
+            background-color: #202225;
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .spoiler-text--hidden:hover {
+            background-color: rgba(32, 34, 37, 0.8);
+        }
+
+        .spoiler-text--hidden::selection {
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .quote {
+            display: flex;
+            margin: 0.05em 0;
+        }
+
+        .quote::before {
+            content: "";
+            margin-right: 0.5em;
+            border: 2px solid #4f545c;
+            border-radius: 3px;
+        }
+
+        .pre {
+            background-color: #2f3136;
+            font-family: "Consolas", "Courier New", Courier, monospace;
+        }
+
+        .pre--multiline {
+            margin-top: 0.25em;
+            padding: 0.5em;
+            border: 2px solid #282b30;
+            border-radius: 5px;
+            color: #b9bbbe;
+        }
+
+        .pre--multiline.hljs {
+            background-color: #2f3136;
+            color: #b9bbbe;
+        }
+
+        .pre--inline {
+            padding: 2px;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+
+        .mention {
+            border-radius: 3px;
+            padding: 0 2px;
+            color: #7289da;
+            background-color: rgba(114, 137, 218, .1);
+            font-weight: 500;
+        }
+
+        .timestamp {
+            border-radius: 3px;
+            padding: 0 2px;
+            background-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .emoji {
+            width: 1.325em;
+            height: 1.325em;
+            margin: 0 0.06em;
+            vertical-align: -0.4em;
+        }
+
+        .emoji--small {
+            width: 1em;
+            height: 1em;
+        }
+
+        .emoji--large {
+            width: 2.8em;
+            height: 2.8em;
+        }
+
+        .preamble {
+            display: grid;
+            margin: 0 0.3em 0.6em 0.3em;
+            max-width: 100%;
+            grid-template-columns: auto 1fr;
+        }
+
+        .preamble__guild-icon-container {
+            grid-column: 1;
+        }
+
+        .preamble__guild-icon {
+            max-width: 88px;
+            max-height: 88px;
+        }
+
+        .preamble__entries-container {
+            grid-column: 2;
+            margin-left: 0.6em;
+        }
+
+        .preamble__entry {
+            font-size: 1.4em;
+            color: #ffffff;
+        }
+
+        .preamble__entry--small {
+            font-size: 1em;
+        }
+
+        .chatlog {
+            max-width: 100%;
+        }
+
+        .chatlog__message-group {
+            display: grid;
+            margin: 0 0.6em;
+            padding: 0.9em 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            grid-template-columns: auto 1fr;
+        }
+
+        .chatlog__reference-symbol {
+            grid-column: 1;
+            margin: 8px 4px 4px 18px;
+            border-left: 2px solid #4f545c;
+            border-top: 2px solid #4f545c;
+            border-radius: 8px 0 0 0;
+        }
+
+        .chatlog__reference {
+            display: flex;
+            grid-column: 2;
+            margin-bottom: 0.25em;
+            font-size: 0.875em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            align-items: center;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-avatar {
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            margin-right: 0.25em;
+        }
+
+        .chatlog__reference-name {
+            margin-right: 0.3em;
+            font-weight: 600;
+        }
+
+        .chatlog__reference-content {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__reference-content a:hover {
+            text-decoration: none;
+        }
+
+        .chatlog__reference-link {
+            cursor: pointer;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-link * {
+            display: inline;
+            pointer-events: none;
+        }
+
+        .chatlog__reference-link:hover {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-link:hover *:not(.spoiler-text) {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-edited-timestamp {
+            margin-left: 0.25em;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__author-avatar-container {
+            grid-column: 1;
+            width: 40px;
+            height: 40px;
+            margin-right: 16px;
+        }
+
+        .chatlog__author-avatar {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .chatlog__messages {
+            grid-column: 2;
+            min-width: 50%;
+        }
+
+        .chatlog__author-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .chatlog__timestamp {
+            margin-left: 0.3em;
+            font-size: 0.75em;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__message {
+            padding: 0.1em 0.3em;
+            margin: 0 -0.3em;
+            background-color: transparent;
+            transition: background-color 1s ease;
+        }
+
+        .chatlog__message--highlighted {
+            background-color: rgba(114, 137, 218, 0.2);
+        }
+
+        .chatlog__message--pinned {
+            background-color: rgba(249, 168, 37, 0.05);
+        }
+
+        .chatlog__content {
+            font-size: 0.95em;
+            word-wrap: break-word;
+        }
+
+        .chatlog__edited-timestamp {
+            margin-left: 0.15em;
+            font-size: 0.8em;
+        }
+
+        .chatlog__attachment {
+            display: inline-block;
+            position: relative;
+            margin-top: 0.3em;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden {
+            cursor: pointer;
+            box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatlog__attachment--hidden * {
+            pointer-events: none;
+        }
+
+        .chatlog__attachment-spoiler-caption {
+            display: none;
+            z-index: 999;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 0.4em 0.8em;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 20px;
+            color: #dcddde;
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-spoiler-caption {
+            display: block;
+        }
+
+        .chatlog__attachment--hidden:hover .chatlog__attachment-spoiler-caption {
+            color: #fff;
+        }
+
+        .chatlog__attachment-media {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-media {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic {
+            width: 100%;
+            max-width: 520px;
+            height: 40px;
+            padding: 10px;
+            background-color: #2f3136;
+            border: 1px solid #292b2f;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-generic {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic-icon {
+            float: left;
+            width: 30px;
+            height: 100%;
+            margin-right: 10px;
+        }
+
+        .chatlog__attachment-generic-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+
+        .chatlog__attachment-generic-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__edited-timestamp {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__embed {
+            display: flex;
+            margin-top: 0.3em;
+            max-width: 520px;
+        }
+
+        .chatlog__embed-color-pill {
+            flex-shrink: 0;
+            width: 0.25em;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        .chatlog__embed-color-pill--default {
+            background-color: #202225;
+        }
+
+        .chatlog__embed-content-container {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5em 0.6em;
+            background-color: rgba(46, 48, 54, 0.3);
+            border: 1px solid rgba(46, 48, 54, 0.6);
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .chatlog__embed-content {
+            display: flex;
+            width: 100%;
+        }
+
+        .chatlog__embed-text {
+            flex: 1;
+        }
+
+        .chatlog__embed-author {
+            display: flex;
+            margin-bottom: 0.3em;
+            align-items: center;
+        }
+
+        .chatlog__embed-author-icon {
+            margin-right: 0.5em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .chatlog__embed-author-name {
+            font-size: 0.875em;
+            font-weight: 600;
+            color: #ffffff
+        }
+
+        .chatlog__embed-author-name-link {
+            color: #ffffff;
+        }
+
+        .chatlog__embed-title {
+            margin-bottom: 0.2em;
+            font-size: 0.875em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-description {
+            font-weight: 500;
+            font-size: 0.85em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 0.5em;
+        }
+
+        .chatlog__embed-field {
+            flex: 0;
+            min-width: 100%;
+            max-width: 506px;
+            padding-top: 0.6em;
+            font-size: 0.875em;
+        }
+
+        .chatlog__embed-field--inline {
+            flex: 1;
+            flex-basis: auto;
+            min-width: 150px;
+        }
+
+        .chatlog__embed-field-name {
+            margin-bottom: 0.2em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-field-value {
+            font-weight: 500;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-thumbnail {
+            flex: 0;
+            margin-left: 1.2em;
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-image-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-image {
+            max-width: 500px;
+            max-height: 400px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-footer {
+            margin-top: 0.6em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-footer-icon {
+            margin-right: 0.2em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        .chatlog__embed-footer-text {
+            vertical-align: middle;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+
+        .chatlog__embed-plainimage {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-spotify {
+            border: 0;
+        }
+
+        .chatlog__embed-youtube-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-youtube {
+            border: 0;
+            border-radius: 3px;
+        }
+
+        .chatlog__reactions {
+            display: flex;
+        }
+
+        .chatlog__reaction {
+            display: flex;
+            align-items: center;
+            margin: 0.35em 0.1em 0.1em 0.1em;
+            padding: 0.2em 0.35em;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .chatlog__reaction-count {
+            min-width: 9px;
+            margin-left: 0.35em;
+            font-size: 0.875em;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .chatlog__bot-tag {
+            position: relative;
+            top: -.1em;
+            margin-left: 0.3em;
+            padding: 0.05em 0.3em;
+            border-radius: 3px;
+            line-height: 1.3;
+            background-color: #5865F2;
+            color: #ffffff;
+            font-size: 0.625em;
+            font-weight: 500;
+        }
+
+        .postamble {
+            margin: 1.4em 0.3em 0.6em 0.3em;
+            padding: 1em;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .postamble__entry {
+            color: #ffffff;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler-text--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler-text--hidden');
+            }
+            if (element && element.classList.contains('chatlog__attachment--hidden')) {
+                event.preventDefault();
+                element.classList.remove('chatlog__attachment--hidden');
+            }
+        }
+    </script>
+
+    <svg style="display: none">
+        <symbol id="icon-attachment" viewBox="0 0 720 960">
+            <path fill="#f4f5fb" d="M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z" />
+            <path fill="#7789c4" d="M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z" />
+            <path fill="#f4f5fb" d="M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z" />
+            <path fill="#7789c4" d="M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z" />
+        </symbol>
+    </svg>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/icons/705971241793618042/bffd4391f862f7a3f80f70880abe69b3.png" alt="Guild icon" loading="lazy">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">BONUSDAMAGESTUCK</div>
+        <div class="preamble__entry">Terminals / terminal-gi</div>
+        <div class="preamble__entry">Grindfest</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 10:55 PM</span>
+
+            <div class="chatlog__message " data-message-id="715397785083445269" id="message-715397785083445269" title="Message sent: 05-27-20 10:55 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Go outside</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 10:57 PM</span>
+
+            <div class="chatlog__message " data-message-id="715398378162225162" id="message-715398378162225162" title="Message sent: 05-27-20 10:57 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You go outside. You appear to be on a very, very tall cliff. Below, you see a LOT of bodies of water scattered about a vast yellow plain.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="715399492999839835" id="message-715399492999839835" title="Message sent: 05-27-20 11:02 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">How far down?</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="715399711275614258" id="message-715399711275614258" title="Message sent: 05-27-20 11:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Far enough to go kersplat.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="715399861268119593" id="message-715399861268119593" title="Message sent: 05-27-20 11:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Attempt to find a standard military parachute</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="715400149865725993" id="message-715400149865725993" title="Message sent: 05-27-20 11:04 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You look around the house but dont find any.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="715400309421244417" id="message-715400309421244417" title="Message sent: 05-27-20 11:05 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Make some out of bed sheets</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="715400522307338241" id="message-715400522307338241" title="Message sent: 05-27-20 11:06 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You make a makeshift parachute.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="715400689890754581" id="message-715400689890754581" title="Message sent: 05-27-20 11:06 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Throw Necronomicon at the tank</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="715401165843464262" id="message-715401165843464262" title="Message sent: 05-27-20 11:08 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You toss the tome at the tank. The tank turns dark and it seems to emit a malicious aura. GRIMTANKSPRITE</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="715401230729478155" id="message-715401230729478155" title="Message sent: 05-27-20 11:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji " alt="GI" title="GI" src="https://cdn.discordapp.com/emojis/711790922601594912.png"> Good day</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="715401565619486824" id="message-715401565619486824" title="Message sent: 05-27-20 11:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">The GTS pulses.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="715401630824005635" id="message-715401630824005635" title="Message sent: 05-27-20 11:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji " alt="GI" title="GI" src="https://cdn.discordapp.com/emojis/711790922601594912.png"> May I enter you?</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:14 PM</span>
+
+            <div class="chatlog__message " data-message-id="715402544301604874" id="message-715402544301604874" title="Message sent: 05-27-20 11:14 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">GTS: -. ---</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:14 PM</span>
+
+            <div class="chatlog__message " data-message-id="715402709036957983" id="message-715402709036957983" title="Message sent: 05-27-20 11:14 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Attempt to enter him</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="715403300534485052" id="message-715403300534485052" title="Message sent: 05-27-20 11:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">It floats away.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="715403480336171050" id="message-715403480336171050" title="Message sent: 05-27-20 11:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(roll agi)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/avrae-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Avrae#6944" data-user-id="261302296103747584" style="color: rgb(233,30,99)">Avrae</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-27-20 11:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="715403501538246680" id="message-715403501538246680" title="Message sent: 05-27-20 11:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="clockworker#9782">@[GI] gnosticIncandescence</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (18) + 2
+<strong>Total:</strong> 20</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="715403627887329313" id="message-715403627887329313" title="Message sent: 05-27-20 11:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">It melts into the darkness.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="715405946972536883" id="message-715405946972536883" title="Message sent: 05-27-20 11:27 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Shit</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715406010139017287" id="message-715406010139017287" title="Message sent: 05-27-20 11:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Get a flashlight for next time</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="715406302138073613" id="message-715406302138073613" title="Message sent: 05-27-20 11:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You go to your utility closet, which is now clearly missing a WASHER and a DRYER. You find a FLASHLIGHT (QcPk0GU1 t1) on the ground.</span>
+
+                                <span class="chatlog__edited-timestamp" title="05-27-20 11:29 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:37 PM</span>
+
+            <div class="chatlog__message " data-message-id="715408257262288986" id="message-715408257262288986" title="Message sent: 05-27-20 11:37 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Find the fucker</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:38 PM</span>
+
+            <div class="chatlog__message " data-message-id="715408707093266502" id="message-715408707093266502" title="Message sent: 05-27-20 11:38 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You look around but see no sign of the tank.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="715409136451584071" id="message-715409136451584071" title="Message sent: 05-27-20 11:40 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Look around</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="715409234413748224" id="message-715409234413748224" title="Message sent: 05-27-20 11:40 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You see something moving out of the corner of your eye.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:41 PM</span>
+
+            <div class="chatlog__message " data-message-id="715409288109228153" id="message-715409288109228153" title="Message sent: 05-27-20 11:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Shoot now, ask questions later</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:41 PM</span>
+
+            <div class="chatlog__message " data-message-id="715409354974691389" id="message-715409354974691389" title="Message sent: 05-27-20 11:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Roll for AMBUSH.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/avrae-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Avrae#6944" data-user-id="261302296103747584" style="color: rgb(233,30,99)">Avrae</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-27-20 11:41 PM</span>
+
+            <div class="chatlog__message " data-message-id="715409394380177488" id="message-715409394380177488" title="Message sent: 05-27-20 11:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="clockworker#9782">@[GI] gnosticIncandescence</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (19) + 2
+<strong>Total:</strong> 21</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715409471110905916" id="message-715409471110905916" title="Message sent: 05-27-20 11:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Ckat#2020">@[DM] dissonantMonochrome</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (15)
+<strong>Total:</strong> 15</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-27-20 11:42 PM</span>
+
+            <div class="chatlog__message " data-message-id="715409523007029299" id="message-715409523007029299" title="Message sent: 05-27-20 11:42 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention">#strife-gi</span></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 09:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="715732831791480853" id="message-715732831791480853" title="Message sent: 05-28-20 09:06 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Continue to look around for those chuckle fucks</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 09:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="715733310911021169" id="message-715733310911021169" title="Message sent: 05-28-20 09:08 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You see two more of the same type of monsters stealing food from the grounded fridge.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 09:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="715733391814688799" id="message-715733391814688799" title="Message sent: 05-28-20 09:08 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji " alt="GI" title="GI" src="https://cdn.discordapp.com/emojis/711790922601594912.png"> HEY!</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715733408046776360" id="message-715733408046776360" title="Message sent: 05-28-20 09:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Shoot</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/avrae-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Avrae#6944" data-user-id="261302296103747584" style="color: rgb(233,30,99)">Avrae</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-28-20 09:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="715733437893312585" id="message-715733437893312585" title="Message sent: 05-28-20 09:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="clockworker#9782">@[GI] gnosticIncandescence</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (6) + 2
+<strong>Total:</strong> 8</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715733786305757234" id="message-715733786305757234" title="Message sent: 05-28-20 09:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Ckat#2020">@[DM] dissonantMonochrome</span>
+Rolling 2 iterations...
+1d20 (14) = <span class="pre pre--inline">14</span>
+1d20 (11) = <span class="pre pre--inline">11</span>
+25 total.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 09:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="715733832707342347" id="message-715733832707342347" title="Message sent: 05-28-20 09:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">AMBUSH FAILED.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 09:59 PM</span>
+
+            <div class="chatlog__message " data-message-id="715746136085758013" id="message-715746136085758013" title="Message sent: 05-28-20 09:59 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Look for that tank, your hurt</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715747062347726889" id="message-715747062347726889" title="Message sent: 05-28-20 10:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">l;&#39;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="715747278396194887" id="message-715747278396194887" title="Message sent: 05-28-20 10:04 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You find the TANK hovering over the ALCHEMITER.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="715747412714455132" id="message-715747412714455132" title="Message sent: 05-28-20 10:04 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Look at the alchemiter</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:13 PM</span>
+
+            <div class="chatlog__message " data-message-id="715749514241376328" id="message-715749514241376328" title="Message sent: 05-28-20 10:13 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">There doesnt seem to be any changes.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:14 PM</span>
+
+            <div class="chatlog__message " data-message-id="715749779501744159" id="message-715749779501744159" title="Message sent: 05-28-20 10:14 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Go with your hunch</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715749865757343824" id="message-715749865757343824" title="Message sent: 05-28-20 10:14 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Interact with it and make some more captcha cards</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="715750774704963616" id="message-715750774704963616" title="Message sent: 05-28-20 10:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Its asking for 1 of any GRIST TYPE.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="715752199153647706" id="message-715752199153647706" title="Message sent: 05-28-20 10:23 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">25 build</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="715752487692271687" id="message-715752487692271687" title="Message sent: 05-28-20 10:24 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You make 25 cards.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="715752893201776670" id="message-715752893201776670" title="Message sent: 05-28-20 10:26 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Pick up everything from the tank</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="715753010881363980" id="message-715753010881363980" title="Message sent: 05-28-20 10:26 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You pick them up.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715754693820940348" id="message-715754693820940348" title="Message sent: 05-28-20 10:33 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">PISTOL (9y2WroMk t2), THE CALL OF CTHULHU (X3H4RvcJ t1), 4-LEAF CLOVER (0P2e0110 t2)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:36 PM</span>
+
+            <div class="chatlog__message " data-message-id="715755314858688526" id="message-715755314858688526" title="Message sent: 05-28-20 10:36 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Find a creature more suited to your skill</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/avrae-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Avrae#6944" data-user-id="261302296103747584" style="color: rgb(233,30,99)">Avrae</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-28-20 10:36 PM</span>
+
+            <div class="chatlog__message " data-message-id="715755534732754944" id="message-715755534732754944" title="Message sent: 05-28-20 10:36 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Ckat#2020">@[DM] dissonantMonochrome</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d12 (3)
+<strong>Total:</strong> 3</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:37 PM</span>
+
+            <div class="chatlog__message " data-message-id="715755734331031622" id="message-715755734331031622" title="Message sent: 05-28-20 10:37 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You find a large HULKING red creature loitering around your LIBRARY.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="715756091190804652" id="message-715756091190804652" title="Message sent: 05-28-20 10:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">SNEAK ATTACK</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/avrae-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Avrae#6944" data-user-id="261302296103747584" style="color: rgb(233,30,99)">Avrae</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-28-20 10:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="715756112221044767" id="message-715756112221044767" title="Message sent: 05-28-20 10:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="clockworker#9782">@[GI] gnosticIncandescence</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (16) + 2
+<strong>Total:</strong> 18</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715756779711103018" id="message-715756779711103018" title="Message sent: 05-28-20 10:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Ckat#2020">@[DM] dissonantMonochrome</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (<strong>1</strong>)
+<strong>Total:</strong> 1</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:42 PM</span>
+
+            <div class="chatlog__message " data-message-id="715756806961627258" id="message-715756806961627258" title="Message sent: 05-28-20 10:42 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">AMBUSH SUCCESSFUL</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:54 PM</span>
+
+            <div class="chatlog__message " data-message-id="715759977188556841" id="message-715759977188556841" title="Message sent: 05-28-20 10:54 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji " alt="GI" title="GI" src="https://cdn.discordapp.com/emojis/711790922601594912.png"> Hey tanky, Im hurt</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:55 PM</span>
+
+            <div class="chatlog__message " data-message-id="715760190326308874" id="message-715760190326308874" title="Message sent: 05-28-20 10:55 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">The ETS shoots some dark energy at you. You feel refreshed, somehow.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="715760376834293770" id="message-715760376834293770" title="Message sent: 05-28-20 10:56 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(any dark knowledge about the futility of my existence?)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:57 PM</span>
+
+            <div class="chatlog__message " data-message-id="715760603477573674" id="message-715760603477573674" title="Message sent: 05-28-20 10:57 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((Nope</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:57 PM</span>
+
+            <div class="chatlog__message " data-message-id="715760640483917887" id="message-715760640483917887" title="Message sent: 05-28-20 10:57 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Find more to hunt</span>
+
+                                <span class="chatlog__edited-timestamp" title="05-28-20 10:57 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 10:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="715761027891068938" id="message-715761027891068938" title="Message sent: 05-28-20 10:58 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You see two more shadows in the KITCHEN.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/avrae-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Avrae#6944" data-user-id="261302296103747584" style="color: rgb(233,30,99)">Avrae</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-28-20 10:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="715761048220598272" id="message-715761048220598272" title="Message sent: 05-28-20 10:58 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Ckat#2020">@[DM] dissonantMonochrome</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 2d12 (7, 5)
+<strong>Total:</strong> 12</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 11:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="715761744823320617" id="message-715761744823320617" title="Message sent: 05-28-20 11:01 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">SNEAK ATTACK</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/avrae-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Avrae#6944" data-user-id="261302296103747584" style="color: rgb(233,30,99)">Avrae</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-28-20 11:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="715761775961964555" id="message-715761775961964555" title="Message sent: 05-28-20 11:01 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="clockworker#9782">@[GI] gnosticIncandescence</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (12) + 2
+<strong>Total:</strong> 14</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715762133849079883" id="message-715762133849079883" title="Message sent: 05-28-20 11:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Ckat#2020">@[DM] dissonantMonochrome</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (2)
+<strong>Total:</strong> 2</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 11:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="715762161074307102" id="message-715762161074307102" title="Message sent: 05-28-20 11:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">AMBUSH SUCCESSFUL.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 11:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="715765916108980265" id="message-715765916108980265" title="Message sent: 05-28-20 11:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Do some alchemy</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715765957221548033" id="message-715765957221548033" title="Message sent: 05-28-20 11:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Punch two cards</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715765990167674900" id="message-715765990167674900" title="Message sent: 05-28-20 11:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">place them atop one another</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715766059323621426" id="message-715766059323621426" title="Message sent: 05-28-20 11:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">combine them</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 11:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="715766105641189427" id="message-715766105641189427" title="Message sent: 05-28-20 11:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((Which 2</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 11:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="715766322599821313" id="message-715766322599821313" title="Message sent: 05-28-20 11:19 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">9y2WroMk tier 2 &amp;&amp; 9yHHBjj5 tier 2</span>
+
+                                <span class="chatlog__edited-timestamp" title="05-28-20 11:20 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 11:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="715766519564599309" id="message-715766519564599309" title="Message sent: 05-28-20 11:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">16 <img loading="lazy" class="emoji " alt="Build" title="Build" src="https://cdn.discordapp.com/emojis/708190928355196958.png">  and 8<img loading="lazy" class="emoji " alt="Tar" title="Tar" src="https://cdn.discordapp.com/emojis/708194357135671387.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 11:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="715766579412992050" id="message-715766579412992050" title="Message sent: 05-28-20 11:20 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="https://cdn.discordapp.com/attachments/711788354395439184/715766579278643220/Tar.png">
+                                <img class="chatlog__attachment-media" src="https://cdn.discordapp.com/attachments/711788354395439184/715766579278643220/Tar.png" alt="Image attachment" title="Image: Tar.png (1.88 KB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715766673864392715" id="message-715766673864392715" title="Message sent: 05-28-20 11:21 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Switch to ||</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 11:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="715767267597615104" id="message-715767267597615104" title="Message sent: 05-28-20 11:23 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Costs the same.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 11:25 PM</span>
+
+            <div class="chatlog__message " data-message-id="715767716279222312" id="message-715767716279222312" title="Message sent: 05-28-20 11:25 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Go on another killing spree</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 11:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="715768238642036808" id="message-715768238642036808" title="Message sent: 05-28-20 11:27 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You look around your house again. You see... a flat round creature?</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 11:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="715768293914443859" id="message-715768293914443859" title="Message sent: 05-28-20 11:27 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">SHOOT IT</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/avrae-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Avrae#6944" data-user-id="261302296103747584" style="color: rgb(233,30,99)">Avrae</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-28-20 11:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="715768315871494145" id="message-715768315871494145" title="Message sent: 05-28-20 11:27 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="clockworker#9782">@[GI] gnosticIncandescence</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (16) + 2
+<strong>Total:</strong> 18</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="715768605576396872" id="message-715768605576396872" title="Message sent: 05-28-20 11:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Ckat#2020">@[DM] dissonantMonochrome</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (8)
+<strong>Total:</strong> 8</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-28-20 11:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="715768642557444137" id="message-715768642557444137" title="Message sent: 05-28-20 11:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">AMBUSH SUCCESSFUL</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/avrae-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Avrae#6944" data-user-id="261302296103747584" style="color: rgb(233,30,99)">Avrae</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-28-20 11:33 PM</span>
+
+            <div class="chatlog__message " data-message-id="715769646862565417" id="message-715769646862565417" title="Message sent: 05-28-20 11:33 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Ckat#2020">@[DM] dissonantMonochrome</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d12 (7)
+<strong>Total:</strong> 7</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 12:21 AM</span>
+
+            <div class="chatlog__message " data-message-id="715781764349558784" id="message-715781764349558784" title="Message sent: 05-29-20 12:21 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">9y2WroMk tier 2 &amp;&amp; 5MWUBV17 tier 3</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 12:23 AM</span>
+
+            <div class="chatlog__message " data-message-id="715782259478757479" id="message-715782259478757479" title="Message sent: 05-29-20 12:23 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">16 <img loading="lazy" class="emoji " alt="Build" title="Build" src="https://cdn.discordapp.com/emojis/708190928355196958.png"> and 8 <img loading="lazy" class="emoji " alt="Tar" title="Tar" src="https://cdn.discordapp.com/emojis/708194357135671387.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 12:23 AM</span>
+
+            <div class="chatlog__message " data-message-id="715782463799951380" id="message-715782463799951380" title="Message sent: 05-29-20 12:23 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Try ||</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 12:27 AM</span>
+
+            <div class="chatlog__message " data-message-id="715783295090294806" id="message-715783295090294806" title="Message sent: 05-29-20 12:27 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">32 <img loading="lazy" class="emoji " alt="Build" title="Build" src="https://cdn.discordapp.com/emojis/708190928355196958.png">  16 <img loading="lazy" class="emoji " alt="Ruby" title="Ruby" src="https://cdn.discordapp.com/emojis/708193798542458971.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:51 AM</span>
+
+            <div class="chatlog__message " data-message-id="715940361251586129" id="message-715940361251586129" title="Message sent: 05-29-20 10:51 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(I didn’t have enough grist for that)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 09:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="716099492658544671" id="message-716099492658544671" title="Message sent: 05-29-20 09:23 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Find more shit to murder</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 09:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="716099798247276586" id="message-716099798247276586" title="Message sent: 05-29-20 09:24 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You look around. You see the 3 FLIPLINGS still loitering around.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 09:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="716100177735188531" id="message-716100177735188531" title="Message sent: 05-29-20 09:26 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Find an ogre or two</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 09:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="716100622600110101" id="message-716100622600110101" title="Message sent: 05-29-20 09:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You see 3 OGRES.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 09:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="716100685313343538" id="message-716100685313343538" title="Message sent: 05-29-20 09:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">SNEAK ATTACK</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/avrae-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Avrae#6944" data-user-id="261302296103747584" style="color: rgb(233,30,99)">Avrae</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-29-20 09:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="716100704170934325" id="message-716100704170934325" title="Message sent: 05-29-20 09:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="clockworker#9782">@[GI] gnosticIncandescence</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (2) + 2
+<strong>Total:</strong> 4</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="716102078673453167" id="message-716102078673453167" title="Message sent: 05-29-20 09:34 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Ckat#2020">@[DM] dissonantMonochrome</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (11)
+<strong>Total:</strong> 11</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 09:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="716102107832254464" id="message-716102107832254464" title="Message sent: 05-29-20 09:34 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">AMBUSH FAILED.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/avrae-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Avrae#6944" data-user-id="261302296103747584" style="color: rgb(233,30,99)">Avrae</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-29-20 09:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="716102302230118522" id="message-716102302230118522" title="Message sent: 05-29-20 09:34 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="Ckat#2020">@[DM] dissonantMonochrome</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 3d12 (<strong>12</strong>, 9, 5)
+<strong>Total:</strong> 26</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="716109456244736104" id="message-716109456244736104" title="Message sent: 05-29-20 10:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Attempt to ddos your server player by hacking pesterchum</span>
+
+                                <span class="chatlog__edited-timestamp" title="05-29-20 10:04 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="716109793856847963" id="message-716109793856847963" title="Message sent: 05-29-20 10:04 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>using old 1980s technology</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="716110269457104957" id="message-716110269457104957" title="Message sent: 05-29-20 10:06 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You try, but nothing happens.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="716110308740956181" id="message-716110308740956181" title="Message sent: 05-29-20 10:06 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(roll int?)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/avrae-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Avrae#6944" data-user-id="261302296103747584" style="color: rgb(233,30,99)">Avrae</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-29-20 10:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="716110356572799077" id="message-716110356572799077" title="Message sent: 05-29-20 10:06 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="clockworker#9782">@[GI] gnosticIncandescence</span>  <img loading="lazy" class="emoji " alt="🎲" title="game_die" src="https://twemoji.maxcdn.com/2/svg/1f3b2.svg">
+<strong>Result</strong>: 1d20 (<strong>1</strong>) + 3
+<strong>Total:</strong> 4</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:07 PM</span>
+
+            <div class="chatlog__message " data-message-id="716110385903566870" id="message-716110385903566870" title="Message sent: 05-29-20 10:07 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Nope, nothing happens.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:07 PM</span>
+
+            <div class="chatlog__message " data-message-id="716110414793932903" id="message-716110414793932903" title="Message sent: 05-29-20 10:07 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">this computer tastes funny</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="716110545970790562" id="message-716110545970790562" title="Message sent: 05-29-20 10:07 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Attempt to find a long piece of wood</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="716111176806957056" id="message-716111176806957056" title="Message sent: 05-29-20 10:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You find a long piece of wood (0m2W0000 t1).</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="716111411180470292" id="message-716111411180470292" title="Message sent: 05-29-20 10:11 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Attempt to make a fulcrum that would be enough to launch you about 20 feet into the air</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="716111824826793985" id="message-716111824826793985" title="Message sent: 05-29-20 10:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">You place it over the remains of your blasted FRIDGE.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="716111875770679297" id="message-716111875770679297" title="Message sent: 05-29-20 10:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Call to the dark tank</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="716112925646913536" id="message-716112925646913536" title="Message sent: 05-29-20 10:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">The ETS melts out of the shadows.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="716113086448140348" id="message-716113086448140348" title="Message sent: 05-29-20 10:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji " alt="GI" title="GI" src="https://cdn.discordapp.com/emojis/711790922601594912.png"> Could you drop your full weight on the other side of this wood?</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="716113287758086225" id="message-716113287758086225" title="Message sent: 05-29-20 10:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">It does so. You get sent flying towards your gate.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="clockworker#9782" data-user-id="567063421657284638" style="color: rgb(48,104,12)">[GI] gnosticIncandescence</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="716113367043014728" id="message-716113367043014728" title="Message sent: 05-29-20 10:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji " alt="GI" title="GI" src="https://cdn.discordapp.com/emojis/711790922601594912.png"> AAAAAAAHHHHHHHHHHHHH</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ckat#2020" data-user-id="142823117197148160" style="color: rgb(250,212,255)">[DM] dissonantMonochrome</span>
+
+
+        <span class="chatlog__timestamp">05-29-20 10:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="716113411645374524" id="message-716113411645374524" title="Message sent: 05-29-20 10:19 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">When you dont think its quite enough, a sudden burst of wind carries you the rest of the way up.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="716113467832008816" id="message-716113467832008816" title="Message sent: 05-29-20 10:19 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&lt;&lt;SECTION 1&gt;&gt;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
