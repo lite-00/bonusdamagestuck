@@ -592,8 +592,37 @@ img {
     margin: 1.4em 0.3em 0.6em 0.3em;
     padding: 1em;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
 }
 
 .postamble__entry {
     color: #ffffff;
+}
+
+.postamble__entry_l{
+    width: 15%;
+    text-align: left;
+}
+.postamble__entry_c{
+    width: 15%;
+    text-align: center;
+}
+.postamble__entry_r{
+    width: 15%;
+    text-align: right;
+}
+
+a:link {
+    color: #1B96EE ;
+    background-color: transparent;
+    text-decoration: none;
+}
+  
+a:visited {
+    color: #8C28E6;
+    background-color: transparent;
+    text-decoration: none;
 }
