@@ -2,651 +2,16 @@
 <html lang="en">
 
 <head>
+    <!-- moved discordchatexporter style and script to style.css and script.js-->
+    <link rel="stylesheet" href="../style.css">
+    <script src= "../script.js"></script>
+
     <title>BONUSDAMAGESTUCK - terminal-gi</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
 
-    <style>
-        @font-face {
-            font-family: Whitney;
-            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
-            font-weight: 300;
-        }
-
-        @font-face {
-            font-family: Whitney;
-            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
-            font-weight: 400;
-        }
-
-        @font-face {
-            font-family: Whitney;
-            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
-            font-weight: 500;
-        }
-
-        @font-face {
-            font-family: Whitney;
-            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
-            font-weight: 600;
-        }
-
-        @font-face {
-            font-family: Whitney;
-            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
-            font-weight: 700;
-        }
-
-        body {
-            background-color: #36393e;
-            color: #dcddde;
-            font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 17px;
-            font-weight: 400;
-        }
-
-        a {
-            color: #00aff4;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        img {
-            object-fit: contain;
-        }
-
-        .markdown {
-            max-width: 100%;
-            line-height: 1.3;
-            overflow-wrap: break-word;
-        }
-
-        .preserve-whitespace {
-            white-space: pre-wrap;
-        }
-
-        .spoiler-text {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-
-        .spoiler-text--hidden {
-            cursor: pointer;
-            background-color: #202225;
-            color: rgba(0, 0, 0, 0);
-        }
-
-        .spoiler-text--hidden:hover {
-            background-color: rgba(32, 34, 37, 0.8);
-        }
-
-        .spoiler-text--hidden::selection {
-            color: rgba(0, 0, 0, 0);
-        }
-
-        .quote {
-            display: flex;
-            margin: 0.05em 0;
-        }
-
-        .quote::before {
-            content: "";
-            margin-right: 0.5em;
-            border: 2px solid #4f545c;
-            border-radius: 3px;
-        }
-
-        .pre {
-            background-color: #2f3136;
-            font-family: "Consolas", "Courier New", Courier, monospace;
-        }
-
-        .pre--multiline {
-            margin-top: 0.25em;
-            padding: 0.5em;
-            border: 2px solid #282b30;
-            border-radius: 5px;
-            color: #b9bbbe;
-        }
-
-        .pre--multiline.hljs {
-            background-color: #2f3136;
-            color: #b9bbbe;
-        }
-
-        .pre--inline {
-            padding: 2px;
-            border-radius: 3px;
-            font-size: 0.85em;
-        }
-
-        .mention {
-            border-radius: 3px;
-            padding: 0 2px;
-            color: #7289da;
-            background-color: rgba(114, 137, 218, .1);
-            font-weight: 500;
-        }
-
-        .timestamp {
-            border-radius: 3px;
-            padding: 0 2px;
-            background-color: rgba(255, 255, 255, 0.06);
-        }
-
-        .emoji {
-            width: 1.325em;
-            height: 1.325em;
-            margin: 0 0.06em;
-            vertical-align: -0.4em;
-        }
-
-        .emoji--small {
-            width: 1em;
-            height: 1em;
-        }
-
-        .emoji--large {
-            width: 2.8em;
-            height: 2.8em;
-        }
-
-        .preamble {
-            display: grid;
-            margin: 0 0.3em 0.6em 0.3em;
-            max-width: 100%;
-            grid-template-columns: auto 1fr;
-        }
-
-        .preamble__guild-icon-container {
-            grid-column: 1;
-        }
-
-        .preamble__guild-icon {
-            max-width: 88px;
-            max-height: 88px;
-        }
-
-        .preamble__entries-container {
-            grid-column: 2;
-            margin-left: 0.6em;
-        }
-
-        .preamble__entry {
-            font-size: 1.4em;
-            color: #ffffff;
-        }
-
-        .preamble__entry--small {
-            font-size: 1em;
-        }
-
-        .chatlog {
-            max-width: 100%;
-        }
-
-        .chatlog__message-group {
-            display: grid;
-            margin: 0 0.6em;
-            padding: 0.9em 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            grid-template-columns: auto 1fr;
-        }
-
-        .chatlog__reference-symbol {
-            grid-column: 1;
-            margin: 8px 4px 4px 18px;
-            border-left: 2px solid #4f545c;
-            border-top: 2px solid #4f545c;
-            border-radius: 8px 0 0 0;
-        }
-
-        .chatlog__reference {
-            display: flex;
-            grid-column: 2;
-            margin-bottom: 0.25em;
-            font-size: 0.875em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            align-items: center;
-            color: #b5b6b8;
-        }
-
-        .chatlog__reference-avatar {
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            margin-right: 0.25em;
-        }
-
-        .chatlog__reference-name {
-            margin-right: 0.3em;
-            font-weight: 600;
-        }
-
-        .chatlog__reference-content {
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .chatlog__reference-content a:hover {
-            text-decoration: none;
-        }
-
-        .chatlog__reference-link {
-            cursor: pointer;
-            color: #b5b6b8;
-        }
-
-        .chatlog__reference-link * {
-            display: inline;
-            pointer-events: none;
-        }
-
-        .chatlog__reference-link:hover {
-            color: #ffffff;
-        }
-
-        .chatlog__reference-link:hover *:not(.spoiler-text) {
-            color: #ffffff;
-        }
-
-        .chatlog__reference-edited-timestamp {
-            margin-left: 0.25em;
-            font-size: 0.8em;
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        .chatlog__author-avatar-container {
-            grid-column: 1;
-            width: 40px;
-            height: 40px;
-            margin-right: 16px;
-        }
-
-        .chatlog__author-avatar {
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-        }
-
-        .chatlog__messages {
-            grid-column: 2;
-            min-width: 50%;
-        }
-
-        .chatlog__author-name {
-            font-weight: 500;
-            color: #ffffff;
-        }
-
-        .chatlog__timestamp {
-            margin-left: 0.3em;
-            font-size: 0.75em;
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        .chatlog__message {
-            padding: 0.1em 0.3em;
-            margin: 0 -0.3em;
-            background-color: transparent;
-            transition: background-color 1s ease;
-        }
-
-        .chatlog__message--highlighted {
-            background-color: rgba(114, 137, 218, 0.2);
-        }
-
-        .chatlog__message--pinned {
-            background-color: rgba(249, 168, 37, 0.05);
-        }
-
-        .chatlog__content {
-            font-size: 0.95em;
-            word-wrap: break-word;
-        }
-
-        .chatlog__edited-timestamp {
-            margin-left: 0.15em;
-            font-size: 0.8em;
-        }
-
-        .chatlog__attachment {
-            display: inline-block;
-            position: relative;
-            margin-top: 0.3em;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .chatlog__attachment--hidden {
-            cursor: pointer;
-            box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
-        }
-
-        .chatlog__attachment--hidden * {
-            pointer-events: none;
-        }
-
-        .chatlog__attachment-spoiler-caption {
-            display: none;
-            z-index: 999;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            padding: 0.4em 0.8em;
-            background-color: rgba(0, 0, 0, 0.9);
-            border-radius: 20px;
-            color: #dcddde;
-            font-size: 0.9em;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-        }
-
-        .chatlog__attachment--hidden .chatlog__attachment-spoiler-caption {
-            display: block;
-        }
-
-        .chatlog__attachment--hidden:hover .chatlog__attachment-spoiler-caption {
-            color: #fff;
-        }
-
-        .chatlog__attachment-media {
-            vertical-align: top;
-            max-width: 45vw;
-            max-height: 500px;
-            border-radius: 3px;
-        }
-
-        .chatlog__attachment--hidden .chatlog__attachment-media {
-            filter: blur(44px);
-        }
-
-        .chatlog__attachment-generic {
-            width: 100%;
-            max-width: 520px;
-            height: 40px;
-            padding: 10px;
-            background-color: #2f3136;
-            border: 1px solid #292b2f;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .chatlog__attachment--hidden .chatlog__attachment-generic {
-            filter: blur(44px);
-        }
-
-        .chatlog__attachment-generic-icon {
-            float: left;
-            width: 30px;
-            height: 100%;
-            margin-right: 10px;
-        }
-
-        .chatlog__attachment-generic-size {
-            color: #72767d;
-            font-size: 12px;
-        }
-
-        .chatlog__attachment-generic-name {
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-
-        .chatlog__edited-timestamp {
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        .chatlog__embed {
-            display: flex;
-            margin-top: 0.3em;
-            max-width: 520px;
-        }
-
-        .chatlog__embed-color-pill {
-            flex-shrink: 0;
-            width: 0.25em;
-            border-top-left-radius: 3px;
-            border-bottom-left-radius: 3px;
-        }
-
-        .chatlog__embed-color-pill--default {
-            background-color: #202225;
-        }
-
-        .chatlog__embed-content-container {
-            display: flex;
-            flex-direction: column;
-            padding: 0.5em 0.6em;
-            background-color: rgba(46, 48, 54, 0.3);
-            border: 1px solid rgba(46, 48, 54, 0.6);
-            border-top-right-radius: 3px;
-            border-bottom-right-radius: 3px;
-        }
-
-        .chatlog__embed-content {
-            display: flex;
-            width: 100%;
-        }
-
-        .chatlog__embed-text {
-            flex: 1;
-        }
-
-        .chatlog__embed-author {
-            display: flex;
-            margin-bottom: 0.3em;
-            align-items: center;
-        }
-
-        .chatlog__embed-author-icon {
-            margin-right: 0.5em;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-        }
-
-        .chatlog__embed-author-name {
-            font-size: 0.875em;
-            font-weight: 600;
-            color: #ffffff
-        }
-
-        .chatlog__embed-author-name-link {
-            color: #ffffff;
-        }
-
-        .chatlog__embed-title {
-            margin-bottom: 0.2em;
-            font-size: 0.875em;
-            font-weight: 600;
-            color: #ffffff;
-        }
-
-        .chatlog__embed-description {
-            font-weight: 500;
-            font-size: 0.85em;
-            color: #dcddde;
-        }
-
-        .chatlog__embed-fields {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0 0.5em;
-        }
-
-        .chatlog__embed-field {
-            flex: 0;
-            min-width: 100%;
-            max-width: 506px;
-            padding-top: 0.6em;
-            font-size: 0.875em;
-        }
-
-        .chatlog__embed-field--inline {
-            flex: 1;
-            flex-basis: auto;
-            min-width: 150px;
-        }
-
-        .chatlog__embed-field-name {
-            margin-bottom: 0.2em;
-            font-weight: 600;
-            color: #ffffff;
-        }
-
-        .chatlog__embed-field-value {
-            font-weight: 500;
-            color: #dcddde;
-        }
-
-        .chatlog__embed-thumbnail {
-            flex: 0;
-            margin-left: 1.2em;
-            max-width: 80px;
-            max-height: 80px;
-            border-radius: 3px;
-        }
-
-        .chatlog__embed-image-container {
-            margin-top: 0.6em;
-        }
-
-        .chatlog__embed-image {
-            max-width: 500px;
-            max-height: 400px;
-            border-radius: 3px;
-        }
-
-        .chatlog__embed-footer {
-            margin-top: 0.6em;
-            color: #dcddde;
-        }
-
-        .chatlog__embed-footer-icon {
-            margin-right: 0.2em;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            vertical-align: middle;
-        }
-
-        .chatlog__embed-footer-text {
-            vertical-align: middle;
-            font-size: 0.75em;
-            font-weight: 500;
-        }
-
-        .chatlog__embed-plainimage {
-            vertical-align: top;
-            max-width: 45vw;
-            max-height: 500px;
-            border-radius: 3px;
-        }
-
-        .chatlog__embed-spotify {
-            border: 0;
-        }
-
-        .chatlog__embed-youtube-container {
-            margin-top: 0.6em;
-        }
-
-        .chatlog__embed-youtube {
-            border: 0;
-            border-radius: 3px;
-        }
-
-        .chatlog__reactions {
-            display: flex;
-        }
-
-        .chatlog__reaction {
-            display: flex;
-            align-items: center;
-            margin: 0.35em 0.1em 0.1em 0.1em;
-            padding: 0.2em 0.35em;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 3px;
-        }
-
-        .chatlog__reaction-count {
-            min-width: 9px;
-            margin-left: 0.35em;
-            font-size: 0.875em;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .chatlog__bot-tag {
-            position: relative;
-            top: -.1em;
-            margin-left: 0.3em;
-            padding: 0.05em 0.3em;
-            border-radius: 3px;
-            line-height: 1.3;
-            background-color: #5865F2;
-            color: #ffffff;
-            font-size: 0.625em;
-            font-weight: 500;
-        }
-
-        .postamble {
-            margin: 1.4em 0.3em 0.6em 0.3em;
-            padding: 1em;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .postamble__entry {
-            color: #ffffff;
-        }
-    </style>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
-        });
-    </script>
-
-    <script>
-        function scrollToMessage(event, id) {
-            var element = document.getElementById('message-' + id);
-
-            if (element) {
-                event.preventDefault();
-
-                element.classList.add('chatlog__message--highlighted');
-
-                window.scrollTo({
-                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
-                    behavior: 'smooth'
-                });
-
-                window.setTimeout(function() {
-                    element.classList.remove('chatlog__message--highlighted');
-                }, 2000);
-            }
-        }
-
-        function showSpoiler(event, element) {
-            if (element && element.classList.contains('spoiler-text--hidden')) {
-                event.preventDefault();
-                element.classList.remove('spoiler-text--hidden');
-            }
-            if (element && element.classList.contains('chatlog__attachment--hidden')) {
-                event.preventDefault();
-                element.classList.remove('chatlog__attachment--hidden');
-            }
-        }
-    </script>
 
     <svg style="display: none">
         <symbol id="icon-attachment" viewBox="0 0 720 960">
@@ -661,7 +26,7 @@
 
 <div class="preamble">
     <div class="preamble__guild-icon-container">
-        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/icons/705971241793618042/bffd4391f862f7a3f80f70880abe69b3.png" alt="Guild icon" loading="lazy">
+        <img class="preamble__guild-icon" src="../pngs/icon.png" alt="Guild icon" loading="lazy">
     </div>
     <div class="preamble__entries-container">
         <div class="preamble__entry">BONUSDAMAGESTUCK</div>
@@ -673,10 +38,11 @@
 </div>
 <div class="chatlog">
 
+
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -704,7 +70,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -755,7 +121,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -783,7 +149,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -811,7 +177,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -850,7 +216,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -889,7 +255,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -939,7 +305,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -967,7 +333,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -995,7 +361,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1023,7 +389,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1051,7 +417,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1079,7 +445,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1118,7 +484,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1146,7 +512,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1185,7 +551,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1213,7 +579,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1241,7 +607,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1269,7 +635,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1297,7 +663,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1325,7 +691,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1353,7 +719,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1381,7 +747,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1409,7 +775,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1437,7 +803,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1476,7 +842,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1504,7 +870,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1532,7 +898,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1571,7 +937,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1610,7 +976,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1669,7 +1035,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1708,7 +1074,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1747,7 +1113,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1806,7 +1172,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1834,7 +1200,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1862,7 +1228,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1890,7 +1256,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1918,7 +1284,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1946,7 +1312,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -1974,7 +1340,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2002,7 +1368,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2041,7 +1407,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2069,7 +1435,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2108,7 +1474,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2136,7 +1502,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2164,7 +1530,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2203,7 +1569,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2231,7 +1597,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2259,7 +1625,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2287,7 +1653,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2315,7 +1681,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2343,7 +1709,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2371,7 +1737,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2410,7 +1776,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2438,7 +1804,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2466,7 +1832,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2494,7 +1860,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2522,7 +1888,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2550,7 +1916,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2578,7 +1944,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2606,7 +1972,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2656,7 +2022,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2684,7 +2050,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2712,7 +2078,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2740,7 +2106,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2768,7 +2134,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2796,7 +2162,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2835,7 +2201,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2863,7 +2229,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2891,7 +2257,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2919,7 +2285,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2969,7 +2335,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -2997,7 +2363,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3025,7 +2391,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3053,7 +2419,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3081,7 +2447,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3109,7 +2475,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3137,7 +2503,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3207,7 +2573,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3246,7 +2612,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3274,7 +2640,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3302,7 +2668,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3330,7 +2696,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3358,7 +2724,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3386,7 +2752,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3425,7 +2791,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3453,7 +2819,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3482,7 +2848,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3521,7 +2887,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3560,7 +2926,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3588,7 +2954,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3616,7 +2982,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3666,7 +3032,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3694,7 +3060,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3722,7 +3088,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3750,7 +3116,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3778,7 +3144,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3817,7 +3183,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3845,7 +3211,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3873,7 +3239,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3901,7 +3267,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3929,7 +3295,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -3999,7 +3365,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4027,7 +3393,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4066,7 +3432,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4094,7 +3460,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4122,7 +3488,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4150,7 +3516,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4189,7 +3555,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4217,7 +3583,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4267,7 +3633,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4306,7 +3672,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4356,7 +3722,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4395,7 +3761,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4423,7 +3789,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4451,7 +3817,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4490,7 +3856,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4518,7 +3884,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4546,7 +3912,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4585,7 +3951,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4613,7 +3979,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4641,7 +4007,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4669,7 +4035,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4697,7 +4063,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4725,7 +4091,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4753,7 +4119,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4781,7 +4147,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4820,7 +4186,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4848,7 +4214,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4876,7 +4242,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4904,7 +4270,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4943,7 +4309,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4971,7 +4337,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -4999,7 +4365,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5027,7 +4393,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5055,7 +4421,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5083,7 +4449,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5111,7 +4477,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5139,7 +4505,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5167,7 +4533,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5195,7 +4561,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5223,7 +4589,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5251,7 +4617,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5290,7 +4656,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5318,7 +4684,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5346,7 +4712,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5385,7 +4751,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5413,7 +4779,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5442,7 +4808,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5470,7 +4836,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5509,7 +4875,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5537,7 +4903,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5565,7 +4931,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5593,7 +4959,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5632,7 +4998,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5691,7 +5057,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5719,7 +5085,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5747,7 +5113,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5775,7 +5141,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5803,7 +5169,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5831,7 +5197,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5859,7 +5225,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5887,7 +5253,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5915,7 +5281,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5944,7 +5310,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -5972,7 +5338,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6000,7 +5366,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6040,7 +5406,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6068,7 +5434,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6119,7 +5485,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6148,7 +5514,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6177,7 +5543,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6205,7 +5571,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6233,7 +5599,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6283,7 +5649,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6307,12 +5673,16 @@
     </div>
 </div>
 
+<div class="chatlog__message-group">
+    <p> <a href="sfa-pregame3.html">Chatlog: super-friendly-alliance Pregame 3</a>
+    <br>
+</div>
 
 
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6340,7 +5710,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6379,7 +5749,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6407,7 +5777,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6435,7 +5805,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6463,7 +5833,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6491,7 +5861,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6519,7 +5889,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6547,7 +5917,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6575,7 +5945,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6614,7 +5984,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6642,7 +6012,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6681,7 +6051,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6720,7 +6090,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6770,7 +6140,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6798,7 +6168,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6826,7 +6196,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6854,7 +6224,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6882,7 +6252,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6910,7 +6280,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6938,7 +6308,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -6966,7 +6336,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7016,7 +6386,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7044,7 +6414,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7072,7 +6442,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7100,7 +6470,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7128,7 +6498,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7156,7 +6526,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7185,7 +6555,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7213,7 +6583,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7263,7 +6633,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7291,7 +6661,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7331,7 +6701,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7370,7 +6740,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7398,7 +6768,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7426,7 +6796,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7454,7 +6824,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7482,7 +6852,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7510,7 +6880,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7538,7 +6908,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7601,7 +6971,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7629,7 +6999,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7657,7 +7027,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7708,7 +7078,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7736,7 +7106,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7764,7 +7134,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7792,7 +7162,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7820,7 +7190,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7848,7 +7218,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7887,7 +7257,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7915,7 +7285,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7943,7 +7313,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -7983,7 +7353,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8011,7 +7381,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8040,7 +7410,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8068,7 +7438,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8096,7 +7466,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8124,7 +7494,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8152,7 +7522,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8180,7 +7550,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8208,7 +7578,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8236,7 +7606,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8264,7 +7634,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8292,7 +7662,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8320,7 +7690,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8379,7 +7749,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8407,7 +7777,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8435,7 +7805,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8463,7 +7833,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8502,7 +7872,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8541,7 +7911,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8569,7 +7939,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8597,7 +7967,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8625,7 +7995,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8654,7 +8024,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8677,12 +8047,15 @@
     </div>
 </div>
 
-
+<div class="chatlog__message-group">
+    <p> <a href="sfa-pregame4.html">Chatlog: super-friendly-alliance Pregame 4</a>
+    <br>
+</div>
 
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8711,7 +8084,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8739,7 +8112,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8767,7 +8140,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8795,7 +8168,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/gi-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/gi-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8823,7 +8196,7 @@
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="pngs/dm-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="../pngs/dm-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -8860,6 +8233,6 @@
 
 <div class="postamble">
 	<div class="postamble__entry_l"><a href="gi-pregame1.html">> Previous</a></div>
-	<div class="postamble__entry_c"><a href="../index.html">> Index</a></div>
+	<div class="postamble__entry_c"><a href="../../index.html">> Index</a></div>
 	<div class="postamble__entry_r"><a href="gi-grindfest1.html">> Next</a></div>
 </div>
