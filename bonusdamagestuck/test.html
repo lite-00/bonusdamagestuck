@@ -1,10 +1,13 @@
+<!-- ***PROBABLY DON'T NEED TO EDIT THIS SECTION, BUT IT SHOULD BE THE SAME FOR ALL HTML FILES EXCEPT
+        THE INDEX*** -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <!-- moved discordchatexporter style and script to style.css and script.js-->
-    <link rel="stylesheet" href="../style.css">
-    <script src= "../script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src= "script.js"></script>
+
     <title>BONUSDAMAGESTUCK - does-this-channel-exist</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -22,14 +25,42 @@
     </svg>
 </head>
 <body>
+<!-- *** -->
 
+
+
+<!-- Edit stuff starting here -->
 <div class="preamble">
     <div class="preamble__guild-icon-container">
-        <img class="preamble__guild-icon" src="../pngs/icon.png" alt="Guild icon" loading="lazy">
+        <img class="preamble__guild-icon" src="pngs/icon.png" alt="Guild icon" loading="lazy">
     </div>
     <div class="preamble__entries-container">
+        <!-- 
+            GENERAL FORMAT FOR PREAMBLE ENTRIES
+            Terminals:  BONUSDAMAGESTUCK
+                        Terminals / (terminal-name)
+                        (Arc name--refer to index page) Part (Part #)
+            Ex:         BONUSDAMAGESTUCK
+                        Terminals / terminal-vs
+                        Pregame Part 1
+
+            Chatlogs:   BONUSDAMAGESTUCK
+                        Chatlogs / (chatlog-name)
+                        (Arc name--refer to index page) Chatlog (Part #)
+            Ex:         BONUSDAMAGESTUCK
+                        Chatlogs / ct-vs
+                        Pregame Chatlog 1
+
+            Strifes:   BONUSDAMAGESTUCK
+                        [S] STRIFE / (strife-name)
+                        (Arc name--refer to index page) Strife (Part #)
+            Ex:         BONUSDAMAGESTUCK
+                        [S] STRIFE / strife-vs
+                        Pregame Strife 1
+        -->
         <div class="preamble__entry">BONUSDAMAGESTUCK</div>
         <div class="preamble__entry">Chatlogs / does-this-channel-exist</div>
+        <div class="preamble__entry">Test Chatlog 1</div>
 
 
     </div>
@@ -37,11 +68,12 @@
 
 <div class="chatlog">
 
-
+<!-- Everything from one <div class="chatlog__message-group"> to the next is one Discord message -->
+<!-- First message starts here -->
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="../pngs/vs-pfp.png" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="pngs/vs-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -53,7 +85,7 @@
             <div class="chatlog__message " title="Message sent: 05-10-20 09:59 PM">
                     <div class="chatlog__content">
                         <div class="markdown">
-                            <span class="preserve-whitespace"><img loading="lazy" class="emoji " alt="VS" title="VS" src="../pngs/vs.png"> what's up</span>
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji " alt="VS" title="VS" src="pngs/vs.png"> what's up</span>
 
                         </div>
                     </div>
@@ -63,11 +95,37 @@
             </div>
     </div>
 </div>
+<!-- First message ends here -->
 
+
+<!-- Here is a link to a chatlog -->
+    <!-- Change the href link, and format the text to "Chatlog: (chatlog-name) (Arc name) (Part #) -->
+<div class="chatlog__message-group">
+    <p> <a href="ctvs-pregame1.html">Chatlog: ct-vs Pregame 1</a>
+    <br>
+</div>
+<!-- Don't remove chat messages, but try to condense them into longer chatlogs--even if the timestamps
+    wouldn't exactly match what's happening in the terminal--because otherwise we'd have a million tiny 
+    chatlog files for every arc -->
+
+<!-- Here is a link to a strife -->
+    <!-- Change the href link, and format the text to "Strife: (strife-name) (Arc name) (Part #) -->
+<div class="chatlog__message-group">
+    <p> <a href="vs-grindfest-strife1.html">Strife: strife-vs Grindfest 1</a>
+    <br>
+</div>
+<!-- To also avoid having a million strife logs, add strifes where nothing interesting happens (or anything
+    that will affect the characters later) directly 
+    to the terminal as seen here. Note to add a (...) on the STRIFE VICTORY message to indicate the skip, and
+    to paste the results -->
+<a href="Arc2/vs-grindfest1.html#strife-example">Skipped strife</a>
+
+
+<!-- Second message starts here -->
 <div class="chatlog__message-group">
 
     <div class="chatlog__author-avatar-container">
-        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/202784340902543361/fb08818002afa8957a1d2668e5788bae.png?size=128" alt="Avatar" loading="lazy">
+        <img class="chatlog__author-avatar" src="pngs/vs-pfp.png" alt="Avatar" loading="lazy">
     </div>
 
     <div class="chatlog__messages">
@@ -79,7 +137,7 @@
             <div class="chatlog__message " title="Message sent: 05-10-20 09:59 PM">
                     <div class="chatlog__content">
                         <div class="markdown">
-                            <span class="preserve-whitespace"><img loading="lazy" class="emoji " alt="VS" title="VS" src="../pngs/vs.png"> this is what the archive would look like</span>
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji " alt="VS" title="VS" src="pngs/vs.png"> this is what the archive would look like</span>
 
                         </div>
                     </div>
@@ -89,7 +147,33 @@
             </div>
     </div>
 </div>
+<!-- Second message ends here -->
 
-<script>
-    document.write('<a href="' + document.referrer + '">> Go Back</a>');
-</script>
+
+
+<!-- At the bottom, add links depending on the type of file -->
+<!-- This set of links is for terminals
+    Must change the Previous and Next href links to the correct ones: if the previous or next part is 
+    in the same arc (ie both inside the Arc1 folder), just put the html file name. If it's in a different 
+    arc, put ../Arc#/ before the html file name -->
+<div class="postamble">
+	<div class="postamble__entry_l"><a href="vs-pregame1.html">> Previous</a></div>
+	<div class="postamble__entry_c"><a href="../../index.html">> Index</a></div>
+	<div class="postamble__entry_r"><a href="../Arc2/vs-grindfest1.html">> Next</a></div>
+</div>
+
+
+<!-- This is for chatlogs and strifes. No need to change anything -->
+<br>
+<div class="postamble">
+    <div class="postamble__entry_l">
+        <script>
+            function goBack() {
+                window.history.back()
+            }
+            </script>
+            <a href="#" onclick="goBack()" />> Go Back</a>
+    </div>
+    <div class="postamble__entry_c"><a href="../../index.html">> Index</a></div>
+    <div class="postamble__entry_r"></div>
+</div>
