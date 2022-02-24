@@ -276,7 +276,8 @@
     <div class="postamble__entry_l">
         <script>
             function goBack() {
-                window.history.back()
+                window.history.back();
+                event.preventDefault();
             }
             </script>
             <a href="#" onclick="goBack()" />> Go Back</a>
